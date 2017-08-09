@@ -50,7 +50,6 @@ class HocSinhNghi
 		$hsnghi=null;
 		$arr=array();
 		if ($result->num_rows > 0) {
-			
 			while ($row=$result->fetch_array()) {
 				$hsnghi=new HocSinhnghi();
 				$hsnghi->iD=$row['id'];

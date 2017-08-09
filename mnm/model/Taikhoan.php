@@ -111,7 +111,7 @@ class TaiKhoan
 		return $tk;
 	}
 
-	function getTk($id)
+	/*function getTk($id)
 	{
 		require_once "model/Connect.php";
 		$kn=new Connect();
@@ -132,6 +132,28 @@ class TaiKhoan
 		}
 		$kn->DisConnect();
 		return $tk;
+	}*/
+
+	function DoiPass($idUser,$username,$password,$passmoi)
+	{
+		require_once "model/Connect.php";
+		$kn=new Connect();
+		$conn=$kn->KetNoi();
+		$result=$conn->query("select * from taikhoan where username='".$username."' and matkhau='".$password."'");
+		$tb="";
+		if ($result->num_rows > 0) {
+			$kq=$conn->query("update taikhoan set matkhau='".$passmoi."' where 
+				id_user=".$idUser);
+			if ($kq===true) {
+				$tb="1";
+			}
+			else
+			{
+				$tb="0";
+			}
+		}
+		$kn->DisConnect();
+		return $tb;
 	}
 
 

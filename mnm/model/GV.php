@@ -3,7 +3,7 @@
 /**
 * 
 */
-class GV 
+class GV extends TaiKhoan
 {
 	private $idGv;
 	private $idTk;	
@@ -64,5 +64,27 @@ class GV
 		$kn->DisConnect();
 		return $arr;
 		}
+
+		function getTenGv($id)
+		{
+		require_once "model/Connect.php";
+		$kn=new Connect();
+		$conn=$kn->KetNoi();
+		$result=$conn->query("select * from giaovien where id_gv=".$id);
+		$ten="";$iduser="";
+		if ($result->num_rows > 0) {
+			while ($row=$result->fetch_array()) {
+				$iduser=$row['id_user'];
+			}
+		$kq=$conn->query("select hodem,ten from taikhoan where id_user=".$iduser);
+		if ($kq->num_rows > 0) {
+			while ($row1=$kq->fetch_array()) {
+				$ten=$row1['hodem']." ".$row1['ten'];
+			}
+		$kn->DisConnect();
+		return $ten;
+		}
+}
+}
 }
  ?>
