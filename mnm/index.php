@@ -24,8 +24,8 @@ if (isset($_POST['request'])) {
 }
 require 'controller/Login.php';echo '<br>';
 require 'controller/DanhSachLop.php';echo '<br>';
-//require 'controller/DanhSachLopGD.php';echo '<br>';
-//require 'controller/DanhSachHocSinh.php';echo '<br>';
-//require_once 'model/HocSinh.php';
-
+require 'controller/DanhSachLopGD.php';echo '<br>';
+require 'controller/DanhSachHocSinh.php';echo '<br>';
+require 'controller/ChiTietHS.php';echo '<br>';
+require 'controller/DoiPass.php';echo '<br>';
  ?>

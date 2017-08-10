@@ -53,7 +53,7 @@ class TaiKhoan
 		$this->quyen=$quyen;
 	}
 
-	function getId()
+  function getId()
 	{
 		return $this->iD;
 	}

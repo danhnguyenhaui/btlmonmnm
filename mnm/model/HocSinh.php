@@ -47,25 +47,17 @@
 		 	require_once 'model/GV.php';
 		 	$kn=new Connect();
 		 	$conn=$kn->KetNoi();
-		 	$result=$conn->query("select * from hocsinh inner join lophoc on 
-		 	hocsinh.id_lop=lophoc.id_lop where id_user=".$iduser);
+		 	$result=$conn->query("select * from hocsinh where id_user=".$iduser);
 		 	$arr=array();
 		 	if ($result->num_rows >0 ) {
 		 		while ($row = $result->fetch_array()) {
-		 			$t=array();
-		 			$t['id_lop']=$row['id_lop'];
-		 			$t['tongsohocsinh']=$this->getTongHsLop($row['id_lop']);
-		 			$t['tenlop']=$row['tenlop'];
-		 			$t['sotinchi']=$row['sotinchi'];
-		 			$t['ketthuchp']=$row['ketthucHP'];
-		 			$t['id_gv']=$row['id_gv'];
-		 			$gv=new GV();
-		 			$t['tengv']=$gv->getTenGv($row['id_gv']);
-		 			array_push($arr, $t);
+		 			$hs=new HocSinh();
+		 			$hs->setIdLopHoc($row['id_lop']);
+		 			$hs->setIdHS($row['id_hs']);
+		 			array_push($arr, $hs);
 		 		}
 		 	}
 		 	return $arr;
-		 	
 		 }
 
 		 function getTongHsLop($idlop)
@@ -89,16 +81,18 @@
 		 	require_once 'model/Connect.php';
 		 	$kn=new Connect();
 		 	$conn=$kn->KetNoi();
-		 	$result=$conn->query("select id_hs,id_lop,hocsinh.id_user,hodem,ten,ngaysinh,quequan from hocsinh inner join taikhoan 
-		 		on hocsinh.id_user=taikhoan.id_user where id_lop=".$idlop);
+		 	$result=$conn->query("select id_hs,hodem,ten,ngaysinh,quequan from hocsinh inner join taikhoan on hocsinh.id_user=taikhoan.id_user where id_lop=".$idlop);
 		 	$arr=array();
 		 	$hs=null;
 		 	if ($result->num_rows > 0) {
 		 		while($row=$result->fetch_array())
 		 		{
-		 			$t=array();
-		 			$t['idHs']=$row['id_hs'];
-		 			
+		 			$hs=new HocSinh();
+		 			$hs->setIdHS($row["id_hs"]);
+		 			$hs->setHo($row["hodem"]);
+		 			$hs->setTen($row["ten"]);
+		 			$hs->setNgaySinh($row["ngaysinh"]);
+		 			$hs->setQuequan($row["quequan"]);
 		 			array_push($arr,$hs);
 		 		}
 		 	}

@@ -51,10 +51,10 @@ class HocSinhNghi
 		$arr=array();
 		if ($result->num_rows > 0) {
 			while ($row=$result->fetch_array()) {
-				$hsnghi=new HocSinhnghi();
+				$hsnghi=new HocSinhNghi();
 				$hsnghi->iD=$row['id'];
 				$hsnghi->maHs=$row['mahsnghi'];
-				$hsnghi->id_Ngay=$row['id_ngay'];
+				$hsnghi->idNgay=$row['id_ngay'];
 				array_push($arr, $hsnghi);
 			}
 		}
