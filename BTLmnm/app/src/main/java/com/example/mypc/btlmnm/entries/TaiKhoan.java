@@ -95,8 +95,17 @@ public abstract   class TaiKhoan {
         this.quyen = quyen;
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "TaiKhoan{" +
+                "idUser='" + idUser + '\'' +
+                ", userName='" + userName + '\'' +
+                ", matKhau='" + matKhau + '\'' +
+                ", hoDem='" + hoDem + '\'' +
+                ", ten='" + ten + '\'' +
+                ", ngaySinh='" + ngaySinh + '\'' +
+                ", queQuan='" + queQuan + '\'' +
+                ", quyen='" + quyen + '\'' +
+                '}';
+    }
 }

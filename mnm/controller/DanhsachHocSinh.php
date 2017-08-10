@@ -1,6 +1,6 @@
 <?php 
 
-//if (isset($_POST['idLop'])) {
+if (isset($_POST['idLop'])) {
 	require_once 'model/HocSinh.php';
 	$hs=new HocSinh();
 	$arr=array();
@@ -17,5 +17,5 @@
 	array_push($ds['ds'], $arr1);
 }
 	echo json_encode($ds);
-//}
+}
  ?>

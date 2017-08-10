@@ -2,6 +2,7 @@ package com.example.mypc.btlmnm.controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,46 +29,49 @@ import java.util.Map;
  */
 
 public abstract class TaiKhoan_C {
-    private final String URL_LOGIN = Config.HOST_NAME + "view/v_login.php";
+    //private final String URL_LOGIN = Config.URL;
     private TaiKhoan taiKhoan;
     private RequestQueue requestQueue;
-    //private Context context;
+    private Context context;
 
     public TaiKhoan_C(Context context) {
         this.requestQueue = Volley.newRequestQueue(context);
-        //this.context = context;
+        this.context = context;
     }
 
     public TaiKhoan dangNhap(final String username, final String password){
         taiKhoan = null;
-        final JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                URL_LOGIN, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                Config.URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
                 try {
-                    String quyen = response.getString("quyen");
+                    JSONObject obj = response.get
+                    Toast.makeText(context, obj.toString(), Toast.LENGTH_LONG).show();
+                    String quyen = obj.getString("quyen");
+                    Log.e("data", obj.toString());
                     if("1".equals(quyen)){
                         taiKhoan = new GiaoVien(
-                            response.getString("iD"), response.getString("userName")
-                                , response.getString("passWord"), response.getString("ho")
-                                , response.getString("ten"), response.getString("ngaysinh")
-                                , response.getString("que"), quyen
+                            obj.getString("iD"), obj.getString("userName")
+                                , obj.getString("passWord"), obj.getString("ho")
+                                , obj.getString("ten"), obj.getString("ngaysinh")
+                                , obj.getString("que"), quyen
 
                         );
 
                     }else{
                         taiKhoan = new HocSinh(
-                                response.getString("iD"), response.getString("userName")
-                                , response.getString("passWord"), response.getString("ho")
-                                , response.getString("ten"), response.getString("ngaysinh")
-                                , response.getString("que"), quyen
+                                obj.getString("iD"), obj.getString("userName")
+                                , obj.getString("passWord"), obj.getString("ho")
+                                , obj.getString("ten"), obj.getString("ngaysinh")
+                                , obj.getString("que"), quyen
 
                         );
                     }
                 } catch (JSONException e) {
                     taiKhoan = null;
-                    e.printStackTrace();
+                    Log.e("Error", "onErrorResponse: " + e.getMessage());
 
                 }
 
@@ -76,7 +80,7 @@ public abstract class TaiKhoan_C {
             @Override
             public void onErrorResponse(VolleyError error) {
                 taiKhoan = null;
-                error.printStackTrace();
+                Log.e("Error", "onErrorResponse: " + error.getMessage());
             }
         }){
             @Override
@@ -84,12 +88,16 @@ public abstract class TaiKhoan_C {
                 Map pas = new HashMap();
                 pas.put("username", username);
                 pas.put("password", password);
+                pas.put("request", "login");
                 return super.getParams();
             }
         };
         this.requestQueue.add(request);
+        //Toast.makeText(context, taiKhoan.toString(), Toast.LENGTH_LONG).show();
         return taiKhoan;
     }
+
+
 
     public boolean doiMatKhau(){
         return false;
@@ -99,10 +107,25 @@ public abstract class TaiKhoan_C {
         return false;
     }
 
+    public ArrayList<TaiKhoan> getDSHocSinh(){
+        return  null;
+    }
 
-    public ArrayList<LopHoc> getDSLopHoc(){
+    public ArrayList<TaiKhoan> getDSLopHoc(){
         return null;
     }
 
+    public RequestQueue getRequestQueue() {
+        return requestQueue;
+    }
 
+
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
 }
